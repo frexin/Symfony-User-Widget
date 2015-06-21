@@ -3,5 +3,10 @@
 {% block title %}FrexinUwidgetBundle:Widget:index{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Widget:index page</h1>
+    <h3>The author has the following errors</h3>
+    <ul>
+        {% for error in errors %}
+            <li>{{ error.message }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

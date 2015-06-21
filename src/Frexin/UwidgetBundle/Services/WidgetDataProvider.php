@@ -10,6 +10,7 @@ namespace Frexin\UwidgetBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Tests\Extension\Validator\EventListener\ValidationListenerTest;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -21,14 +22,33 @@ class WidgetDataProvider
     protected $height = 100;
     protected $backgroundColor = 0x000000;
     protected $textColor = 0xffffff;
-
+    protected $userHash;
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
+        $metadata->addPropertyConstraint('userHash', new NotBlank());
         $metadata->addPropertyConstraint('width', new Range(['min' => 100, 'max' => 500]));
         $metadata->addPropertyConstraint('height', new Range(['min' => 100, 'max' => 500]));
         $metadata->addPropertyConstraint('backgroundColor', new Regex(['pattern' => '/^[0-9A-F]{6}$/i']));
         $metadata->addPropertyConstraint('textColor', new Regex(['pattern' => '/^[0-9A-F]{6}$/i']));
+    }
+
+    /**
+     * @param mixed $userHash
+     * @return WidgetDataProvider
+     */
+    public function setUserHash($userHash)
+    {
+        $this->userHash = $userHash;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserHash()
+    {
+        return $this->userHash;
     }
 
     /**
@@ -39,6 +59,14 @@ class WidgetDataProvider
     {
         $this->width = $width;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 
     /**
@@ -94,4 +122,10 @@ class WidgetDataProvider
     {
         return $this->textColor;
     }
+
+    public function getUserAverageRating()
+    {
+        return "80%";
+    }
+
 }

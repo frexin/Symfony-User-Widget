@@ -1,10 +1,23 @@
 parameters:
     dataProvider.class: Frexin\UwidgetBundle\Services\WidgetDataProvider
+    widgetGenerator.class: Frexin\UwidgetBundle\Services\WidgetGenerator
+    imagine.class: Imagine\Gd\Imagine
 
 services:
 #    frexin_uwidget.example:
 #        class: Frexin\UwidgetBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
 
+  imagine:
+    class: "%imagine.class%"
+
   widget.dataProvider:
     class: "%dataProvider.class%"
+
+  widget.generator:
+    class: "%widgetGenerator.class%"
+    properties:
+      imagine: "@imagine"
+    arguments:
+      - @file_locator
+
