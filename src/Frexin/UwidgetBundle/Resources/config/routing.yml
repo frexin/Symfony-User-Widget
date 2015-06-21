@@ -1,0 +1,7 @@
+frexin_uwidget_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: FrexinUwidgetBundle:Default:index }
+
+index:
+    path:     /user/{hash}/width/{width}/height/{height}/bgcolor/{bgcolor}/textcolor/{textcolor}
+    defaults: { _controller: FrexinUwidgetBundle:Widget:user, width: 100, height: 100, bgcolor: 000000, textcolor: ffffff }

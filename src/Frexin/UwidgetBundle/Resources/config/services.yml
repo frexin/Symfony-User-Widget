@@ -1,0 +1,10 @@
+parameters:
+    dataProvider.class: Frexin\UwidgetBundle\Services\WidgetDataProvider
+
+services:
+#    frexin_uwidget.example:
+#        class: Frexin\UwidgetBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+  widget.dataProvider:
+    class: "%dataProvider.class%"
