@@ -133,7 +133,7 @@ class Review
      * @param \Frexin\UwidgetBundle\Entity\User $user
      * @return Review
      */
-    public function setUser(\Frexin\UwidgetBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 

@@ -8,33 +8,47 @@
 
 namespace Frexin\UwidgetBundle\Services;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\Tests\Extension\Validator\EventListener\ValidationListenerTest;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Validator;
 
 class WidgetDataProvider
 {
-
     protected $width = 100;
     protected $height = 100;
     protected $backgroundColor = 0x000000;
     protected $textColor = 0xffffff;
 
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('name', new NotBlank());
+        $metadata->addPropertyConstraint('width', new Range(['min' => 100, 'max' => 500]));
+        $metadata->addPropertyConstraint('height', new Range(['min' => 100, 'max' => 500]));
+        $metadata->addPropertyConstraint('backgroundColor', new Regex(['pattern' => '/^[0-9A-F]{6}$/i']));
+        $metadata->addPropertyConstraint('textColor', new Regex(['pattern' => '/^[0-9A-F]{6}$/i']));
     }
 
+    /**
+     * @param int $width
+     * @return WidgetDataProvider
+     */
     public function setWidth($width)
     {
-        print $width;
+        $this->width = $width;
+        return $this;
     }
 
     /**
      * @param int $backgroundColor
+     * @return WidgetDataProvider
      */
     public function setBackgroundColor($backgroundColor)
     {
         $this->backgroundColor = $backgroundColor;
+        return $this;
     }
 
     /**
@@ -47,10 +61,12 @@ class WidgetDataProvider
 
     /**
      * @param int $height
+     * @return WidgetDataProvider
      */
     public function setHeight($height)
     {
         $this->height = $height;
+        return $this;
     }
 
     /**
@@ -63,10 +79,12 @@ class WidgetDataProvider
 
     /**
      * @param int $textColor
+     * @return WidgetDataProvider
      */
     public function setTextColor($textColor)
     {
         $this->textColor = $textColor;
+        return $this;
     }
 
     /**
@@ -76,6 +94,4 @@ class WidgetDataProvider
     {
         return $this->textColor;
     }
-
-
-} 
+}

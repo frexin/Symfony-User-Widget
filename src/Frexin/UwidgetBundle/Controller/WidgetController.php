@@ -10,10 +10,14 @@ class WidgetController extends Controller
     {
 
         $dataProvider = $this->get('widget.dataProvider');
-        $dataProvider->setWidth('898');
+        $dataProvider->setWidth($width)->setHeight($height)->setBackgroundColor($bgcolor)->setTextColor($textcolor);
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($dataProvider);
+
 
         return $this->render('FrexinUwidgetBundle:Widget:user.html.twig', array(
-            // ...
+            'errors' => $errors
         ));
     }
 
