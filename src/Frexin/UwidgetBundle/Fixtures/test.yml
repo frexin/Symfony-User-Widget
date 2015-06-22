@@ -1,0 +1,11 @@
+Frexin\UwidgetBundle\Entity\User:
+  user{1}:
+    hash: testhash
+    status: 1
+#    reviews: 3x @review*
+
+Frexin\UwidgetBundle\Entity\Review:
+  review{1..10}:
+    rating: <numberBetween(1, 100)>
+    published: <numberBetween(0, 1)>
+    user: @user1

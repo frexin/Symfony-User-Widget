@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WidgetController extends Controller
 {
-
     /**
      * @var EntityRepository
      */
@@ -52,5 +51,4 @@ class WidgetController extends Controller
 
         return $response;
     }
-
 }
