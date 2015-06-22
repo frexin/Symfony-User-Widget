@@ -1,0 +1,11 @@
+Frexin\UwidgetBundle\Entity\User:
+  user{1..10}:
+    hash: <randomNumber()>
+    status: <numberBetween(0, 1)>
+#    reviews: 3x @review*
+
+Frexin\UwidgetBundle\Entity\Review:
+  review{1..100}:
+    rating: <numberBetween(1, 100)>
+    published: <numberBetween(0, 1)>
+    user: @user<numberBetween(1, 10)>

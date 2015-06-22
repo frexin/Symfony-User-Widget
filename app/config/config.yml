@@ -69,14 +69,12 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-          FrexinUwidgetBundle:
-            type: annotation
-            dir: %kernel.root_dir%/../src/Frexin/UwidgetBundle/Entity
-            prefix: FrexinUwidgetBundle\Entity
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    FrexinUwidgetBundle:  ~
 
 
 # Swiftmailer Configuration
