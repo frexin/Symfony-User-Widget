@@ -1,69 +1,39 @@
-Symfony Standard Edition
+Symfony Test Task: User Widget
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+This is the test symfony application.
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
-
-What's inside?
+Installation
 --------------
 
-The Symfony Standard Edition is configured with the following defaults:
+    git clone git@github.com:frexin/Symfony-Test-App.git
+    composer install
+    php app/console doctrine:migrations:migrate
 
-  * An AppBundle you can use to start coding;
+FakeData generator
+--------------
 
-  * Twig as the only configured template engine;
+This app using fixture generator library - [Alice](https://packagist.org/packages/nelmio/alice).
+You can populate database with random records using next command:
 
-  * Doctrine ORM/DBAL;
+    php app/console h4cc_alice_fixtures:load:sets -m default src/Frexin/UwidgetBundle/Fixtures/DefaultSet.php
 
-  * Swiftmailer;
 
-  * Annotations enabled for everything.
+Tests
+-----
 
-It comes pre-configured with the following bundles:
+Application comes with unit and functional tests. PHPUnit is required.
+Command for running test suites:
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+    phpunit -c app
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+Usage
+-----
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+URI format for generating widget file:
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+    /user/{userhash}/width/{width}/height/{height}/bgcolor/{hexcolor}/textcolor/{hexcolor}
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+Example:
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.7/book/installation.html
-[6]:  http://symfony.com/doc/2.7/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.7/book/doctrine.html
-[8]:  http://symfony.com/doc/2.7/book/templating.html
-[9]:  http://symfony.com/doc/2.7/book/security.html
-[10]: http://symfony.com/doc/2.7/cookbook/email.html
-[11]: http://symfony.com/doc/2.7/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.7/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.7/bundles/SensioGeneratorBundle/index.html
+    /user/dj38dkf/width/100/height/100/bgcolor/C94C08/textcolor/E3CF3B

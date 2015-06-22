@@ -8,7 +8,6 @@
 
 namespace Frexin\UwidgetBundle\Tests\Services;
 
-use Frexin\UwidgetBundle\FrexinUwidgetBundle;
 use Frexin\UwidgetBundle\Services\WidgetDataProvider;
 use Frexin\UwidgetBundle\Services\WidgetGenerator;
 use Imagine\Gd\Imagine;

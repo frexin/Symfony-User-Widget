@@ -13,7 +13,8 @@ use Doctrine\ORM\Query\Expr;
  */
 class UserRepository extends EntityRepository
 {
-    public function getAverageRating($user_id) {
+    public function getAverageRating($user_id)
+    {
         $rating = 0;
 
         $dql = 'select sum(r.rating), count(r.id) from FrexinUwidgetBundle:User u join u.reviews r
