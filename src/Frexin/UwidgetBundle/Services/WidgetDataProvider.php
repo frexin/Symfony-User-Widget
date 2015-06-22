@@ -23,6 +23,15 @@ class WidgetDataProvider
     protected $backgroundColor = 0x000000;
     protected $textColor = 0xffffff;
     protected $userHash;
+    protected $text;
+
+    /**
+     * @param mixed $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
@@ -98,6 +107,14 @@ class WidgetDataProvider
     }
 
     /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
      * @return int
      */
     public function getHeight()
@@ -122,10 +139,4 @@ class WidgetDataProvider
     {
         return $this->textColor;
     }
-
-    public function getUserAverageRating()
-    {
-        return "80%";
-    }
-
 }

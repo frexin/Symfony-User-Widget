@@ -2,37 +2,55 @@
 
 namespace Frexin\UwidgetBundle\Controller;
 
-use Imagine\Gd\Image;
+use Doctrine\ORM\EntityRepository;
+use Frexin\UwidgetBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WidgetController extends Controller
 {
+
+    /**
+     * @var EntityRepository
+     */
+    private $usersRepository;
+
     public function userAction($hash, $width, $height, $bgcolor, $textcolor)
     {
+        $this->usersRepository = $this->getDoctrine()->getManager()->getRepository('FrexinUwidgetBundle:User');
+        $user = $this->usersRepository->findOneBy(['hash' => $hash, 'status' => User::USER_ACTIVE]);
+
+        if (!$user) {
+            throw new NotFoundHttpException('User not found or inactive');
+        }
+
         $dataProvider = $this->get('widget.dataProvider');
         $dataProvider->setWidth($width)->setHeight($height)->setBackgroundColor($bgcolor)->setTextColor($textcolor);
         $dataProvider->setUserHash($hash);
 
-        $validator = $this->get('validator');
-        /**
-         * @var ConstraintViolationList
-         */
-        $errors = $validator->validate($dataProvider);
+        $errors = $this->get('validator')->validate($dataProvider);
 
-        if (!count($errors)) {
-            $widgetGenerator = $this->get('widget.generator');
-            $widgetGenerator->setDataProvider($dataProvider);
-
-            if ($widgetGenerator->create()) {
-                $path = $widgetGenerator->getWidgetPath();
-                print $path;
-            }
+        if (count($errors)) {
+            throw new BadRequestHttpException('Invalid widget parameters');
         }
 
-        return $this->render('FrexinUwidgetBundle:Widget:user.html.twig', array(
-            'errors' => $errors
-        ));
+        $userRating = $this->usersRepository->getAverageRating($user->getId());
+        $dataProvider->setText($userRating . "%");
+
+        $widgetGenerator = $this->get('widget.generator');
+        $widgetGenerator->setDataProvider($dataProvider);
+
+        if (!$widgetGenerator->create()) {
+            throw new HttpException(504, 'Unable to create widget file');
+        }
+
+        $path = $widgetGenerator->getWidgetPath();
+        $response = new BinaryFileResponse($path);
+
+        return $response;
     }
 
 }

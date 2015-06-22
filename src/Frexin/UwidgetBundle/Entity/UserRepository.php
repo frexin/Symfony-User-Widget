@@ -3,6 +3,7 @@
 namespace Frexin\UwidgetBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * UserRepository
@@ -12,4 +13,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function getAverageRating($user_id) {
+        $rating = 0;
+
+        $dql = 'select sum(r.rating), count(r.id) from FrexinUwidgetBundle:User u join u.reviews r
+                where u.id = :uid and r.published = 1 group by u.id';
+        $query = $this->getEntityManager()->createQuery($dql)->setParameter(':uid', $user_id);
+
+        $result = $query->getArrayResult();
+
+        if ($result) {
+            $result = $result[0];
+            $rating = ceil($result[1] / $result[2]);
+        }
+
+        return $rating;
+    }
 }

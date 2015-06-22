@@ -3,6 +3,7 @@
 namespace Frexin\UwidgetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    const USER_ACTIVE = 1;
+    const USER_INACTIVE = 0;
+
     /**
      * @var integer
      *
@@ -20,7 +24,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var guid

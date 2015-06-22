@@ -99,7 +99,7 @@ class WidgetGenerator
 
     private function _addText()
     {
-        $string = $this->dp->getUserAverageRating();
+        $string = $this->dp->getText();
         $fontFile = $this->fileLocator->locate('@FrexinUwidgetBundle/Resources/public/fonts/verdanab.ttf');
 
         $font     = new Font($fontFile, 16, new Color($this->dp->getTextColor()));
@@ -110,7 +110,7 @@ class WidgetGenerator
     private function _generateWidgetName($extension = 'png') {
         $dp = $this->dp;
         $string = $dp->getWidth() . $dp->getHeight() . $dp->getTextColor() . $dp->getBackgroundColor()
-            . $dp->getUserAverageRating() . $dp->getUserHash();
+            . $dp->getText() . $dp->getUserHash();
         $name = substr(md5($string), 0, 14) . '.' . $extension;
 
         return $name;
